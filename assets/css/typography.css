@@ -1,0 +1,28 @@
+@font-face {
+  font-family: 'Geist-Black';
+  src: url('./../Fonts/Geist-Black.otf');
+  font-weight: 900;
+  font-size: 6rem;
+}
+
+@font-face {
+  font-family: 'Geist-Bold';
+  src: url('./../fonts/Geist-Bold.otf');
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: 'Geist-Medium';
+  src: url('./../fonts/Geist-Medium.otf');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Geist-Regular';
+  src: url('./../fonts/Geist-Regular.otf');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'JetBrainsMono-ExtraBoldItalic';
+  src: url('./../fonts/JetBrainsMono-ExtraBoldItalic.ttf');
+  font-weight: bold;
+}

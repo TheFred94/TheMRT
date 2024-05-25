@@ -18,8 +18,7 @@
     >
       <form
         class="space-y-6"
-        action="#"
-        method="POST"
+        @submit.prevent="login"
       >
         <div>
           <label
@@ -34,7 +33,7 @@
               type="email"
               autocomplete="email"
               required=""
-              class="block bg-TxGray10 w-full rounded-md border-0 py-1.5 text-Txring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-Tx sm:text-sm sm:leading-6"
+              class="block bg-TxGray10 w-full rounded-md border-0 py-1.5 text-Txring-inset ring-gray-300 placeholder:text-Tx focus:ring-2 focus:ring-inset focus:ring-Tx sm:leading-6"
             />
           </div>
         </div>
@@ -48,13 +47,13 @@
             >
 
             <!-- FIXME Skal denne være der? -->
-            <div class="">
+            <!-- <div class="">
               <a
                 href="#"
                 class="text-sm text-TxGray hover:text-Tx"
                 >Forgot password?</a
               >
-            </div>
+            </div> -->
           </div>
           <div class="mt-2">
             <input
@@ -63,7 +62,7 @@
               type="password"
               autocomplete="current-password"
               required=""
-              class="block bg-TxGray10 w-full rounded-md border-0 py-1.5 text-Tx ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-Tx sm:text-sm sm:leading-6"
+              class="block bg-TxGray10 w-full rounded-md border-0 py-1.5 text-Tx ring-inset ring-gray-300 placeholder:text-TxGray focus:ring-2 focus:ring-inset focus:ring-Tx sm:leading-6"
             />
           </div>
         </div>
@@ -81,6 +80,27 @@
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+// const username = ref('');
+// const password = ref('');
+
+async function login() {
+  const users = await $fetch('/users.json');
+  console.log('submitted');
+  console.log('username', email.value);
+  console.log('password', password.value);
+  console.log('users', users);
+
+  const user = users.find(
+    (user) => user.email === email.value && user.password === password.value
+  );
+
+  if (user) {
+    console.log('true');
+  } else {
+    console.log('false');
+  }
+}
+</script>
 
 <style></style>

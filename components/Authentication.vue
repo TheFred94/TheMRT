@@ -28,6 +28,7 @@
           >
           <div class="mt-2">
             <input
+              v-model="email"
               id="email"
               name="email"
               type="email"
@@ -57,6 +58,7 @@
           </div>
           <div class="mt-2">
             <input
+              v-model="password"
               id="password"
               name="password"
               type="password"
@@ -81,24 +83,25 @@
 </template>
 
 <script lang="ts" setup>
-// const username = ref('');
-// const password = ref('');
+import { ref } from 'vue'; // Import ref from Vue
+import { useAuthStore } from '/stores/auth'; // Import the auth store
+
+const email = ref('');
+const password = ref('');
 
 async function login() {
-  const users = await $fetch('/users.json');
-  console.log('submitted');
-  console.log('username', email.value);
-  console.log('password', password.value);
-  console.log('users', users);
+  const authStore = useAuthStore(); // Get the auth store instance
 
-  const user = users.find(
-    (user) => user.email === email.value && user.password === password.value
-  );
+  console.log('email', email.value, 'password', password.value);
 
-  if (user) {
-    console.log('true');
-  } else {
-    console.log('false');
+  try {
+    await authStore.login(email, password); // Pass email and password to login method
+
+    // On successful login, navigate or perform further actions
+    //navigateTo('/mission-report'); // Assuming '/dashboard' is a protected route
+  } catch (error) {
+    console.error('Login error:', error);
+    // Handle login errors (e.g., display error message)
   }
 }
 </script>

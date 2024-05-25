@@ -19,9 +19,12 @@ export const useAuthStore = defineStore('auth', {
       if (user) {
         console.log('true');
         navigateTo('/mission-report');
+
+        this.user = user;
       } else {
         console.log('false');
       }
+      console.log('user', this.user);
     },
     logout() {
       this.user = null;

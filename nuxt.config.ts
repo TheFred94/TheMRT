@@ -4,7 +4,8 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   modules: ['@pinia/nuxt'],
   router: {
-    middleware: ['auth'], // Apply the 'auth' middleware globally
+    // Apply the 'auth' middleware globally
+    middleware: ['auth'],
   },
   postcss: {
     plugins: {

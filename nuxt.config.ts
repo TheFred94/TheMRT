@@ -3,10 +3,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   modules: ['@pinia/nuxt'],
-  router: {
-    // Apply the 'auth' middleware globally
-    middleware: ['auth'],
-  },
   postcss: {
     plugins: {
       tailwindcss: {},

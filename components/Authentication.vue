@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-lvh flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <img
         class="mx-auto h-10 w-auto"
@@ -14,12 +14,20 @@
     </div>
 
     <div
-      class="bg-Sc mt-10 sm:mx-auto sm:w-full sm:max-w-sm p-8 rounded-lg border-solid border-St border-2"
+      :class="{ 'bg-Sc': !loggedIn.value, 'bg-green-500': loggedIn.value }"
+      class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm p-8 rounded-lg border-solid border-St border-2"
     >
       <form
         class="space-y-6"
         @submit.prevent="login"
       >
+        <div>
+          <div>
+            <h4>
+              {{ hasLoginError ? 'Wrong credentials' : 'Enter credentials' }}
+            </h4>
+          </div>
+        </div>
         <div>
           <label
             for="email"
@@ -33,8 +41,11 @@
               name="email"
               type="email"
               autocomplete="email"
-              required=""
-              class="block bg-TxGray10 w-full rounded-md border-0 py-1.5 text-Txring-inset ring-gray-300 placeholder:text-Tx focus:ring-2 focus:ring-inset focus:ring-Tx sm:leading-6"
+              required
+              :class="{
+                'border-solid border-2 border-color-Tp block text-Tx bg-TxGray10 w-full rounded-md py-1.5 ring-inset ring-gray-300 placeholder:text-TxGray focus:ring-2 focus:ring-inset focus:ring-Tx sm:leading-6': true,
+                'border-invalid': hasLoginError,
+              }"
             />
           </div>
         </div>
@@ -46,15 +57,6 @@
               class="block leading-6 text-Tx"
               >Password</label
             >
-
-            <!-- FIXME Skal denne være der? -->
-            <!-- <div class="">
-              <a
-                href="#"
-                class="text-sm text-TxGray hover:text-Tx"
-                >Forgot password?</a
-              >
-            </div> -->
           </div>
           <div class="mt-2">
             <input
@@ -63,8 +65,11 @@
               name="password"
               type="password"
               autocomplete="current-password"
-              required=""
-              class="block bg-TxGray10 w-full rounded-md border-0 py-1.5 text-Tx ring-inset ring-gray-300 placeholder:text-TxGray focus:ring-2 focus:ring-inset focus:ring-Tx sm:leading-6"
+              required
+              :class="{
+                'border-solid border-2 border-color-Tp block text-Tx bg-TxGray10 w-full rounded-md py-1.5 ring-inset ring-gray-300 placeholder:text-TxGray focus:ring-2 focus:ring-inset focus:ring-Tx sm:leading-6': true,
+                'border-invalid': hasLoginError,
+              }"
             />
           </div>
         </div>
@@ -83,26 +88,21 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'; // Import ref from Vue
+import { ref, computed } from 'Vue'; // Import necessary functions from Vue
 import { useAuthStore } from '/stores/auth'; // Import the auth store
 
 const email = ref('');
 const password = ref('');
+const loggedIn = ref(false);
+
+const authStore = useAuthStore();
+
+const isLoggedIn = computed(() => authStore.isLoggedIn);
+const hasLoginError = computed(() => authStore.hasLoginError);
 
 async function login() {
-  const authStore = useAuthStore(); // Get the auth store instance
-
-  console.log('email', email.value, 'password', password.value);
-
-  try {
-    await authStore.login(email, password);
-
-    // On successful login, navigate or perform further actions
-    //navigateTo('/mission-report'); // Assuming '/dashboard' is a protected route
-  } catch (error) {
-    console.error('Login error:', error);
-    // Handle login errors (e.g., display error message)
-  }
+  await authStore.login(email.value, password.value);
+  loggedIn.value = isLoggedIn.value; // Update loggedIn after login attempt
 }
 </script>
 

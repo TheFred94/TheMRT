@@ -7,24 +7,17 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async login(email, password) {
       const users = await $fetch('/users.json');
-      console.log('submitted');
-      console.log('username', email.value);
-      console.log('password', password.value);
-      console.log('users', users);
 
       const user = users.find(
         (user) => user.email === email.value && user.password === password.value
       );
 
       if (user) {
-        console.log('true');
-        navigateTo('/mission-report');
-
         this.user = user;
+        navigateTo('/mission-report');
       } else {
-        console.log('false');
+        this.loginError = true; // Set a loginError state for invalid credentials
       }
-      console.log('user', this.user);
     },
     logout() {
       this.user = null;
@@ -34,6 +27,9 @@ export const useAuthStore = defineStore('auth', {
   getters: {
     isLoggedIn() {
       return this.user !== null;
+    },
+    hasLoginError() {
+      return this.loginError;
     },
   },
 });

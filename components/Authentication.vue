@@ -95,7 +95,7 @@ async function login() {
   console.log('email', email.value, 'password', password.value);
 
   try {
-    await authStore.login(email, password); // Pass email and password to login method
+    await authStore.login(email, password);
 
     // On successful login, navigate or perform further actions
     //navigateTo('/mission-report'); // Assuming '/dashboard' is a protected route

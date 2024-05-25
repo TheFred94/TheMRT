@@ -8,15 +8,17 @@ export const useAuthStore = defineStore('auth', {
     async login(email, password) {
       const users = await $fetch('/users.json');
       console.log('submitted');
-
+      console.log('username', email.value);
+      console.log('password', password.value);
       console.log('users', users);
 
       const user = users.find(
-        (user) => user.email === email && user.password === password
+        (user) => user.email === email.value && user.password === password.value
       );
 
       if (user) {
         console.log('true');
+        navigateTo('/mission-report');
       } else {
         console.log('false');
       }

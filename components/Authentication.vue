@@ -99,32 +99,25 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch } from 'vue';
-import { useAuthStore } from '/stores/auth';
+import { computed } from 'vue';
+import { useAuthStore } from '@/stores/auth';
 import { RocketLaunchIcon } from '@heroicons/vue/24/outline';
 
 const email = ref('');
 const password = ref('');
-const loggedIn = ref(false);
+const shakeKey = ref(0); // Key to force re-render on error
+
 const authStore = useAuthStore();
 const isLoggedIn = computed(() => authStore.isLoggedIn);
 const hasLoginError = computed(() => authStore.hasLoginError);
 
-const { authenticateUser } = useAuthStore();
-const { authenticated } = storeToRefs(useAuthStore());
-
-const shakeKey = ref(0); // Define a key to force re-render
-
 async function login() {
-  console.log('Login', email.value, password.value);
-  await authenticateUser(email.value, password.value);
+  await authStore.authenticateUser(email.value, password.value);
 
   if (hasLoginError.value) {
     clearInputs(); // Clear inputs on error
     shakeKey.value += 1;
   }
-
-  loggedIn.value = isLoggedIn.value; // Update loggedIn after login attempt
 }
 
 function clearInputs() {
@@ -132,5 +125,3 @@ function clearInputs() {
   password.value = '';
 }
 </script>
-
-<style></style>

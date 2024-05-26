@@ -1,20 +1,36 @@
-export default defineNuxtRouteMiddleware((to) => {
-  const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive
-  const token = useCookie('token'); // get token from cookies
+import { defineNuxtRouteMiddleware } from 'nuxt/app';
+
+import { useAuthStore } from '../stores/auth';
+
+export default defineNuxtRouteMiddleware(async (to, from) => {
+  const token = useCookie('token');
+  const authStore = useAuthStore();
 
   if (token.value) {
-    // check if value exists
-    authenticated.value = true; // update the state to authenticated
+    try {
+      const response = await $fetch('/api/verify-token', {
+        method: 'POST',
+        body: { token: token.value },
+      });
+
+      if (response.valid) {
+        authStore.authenticated = true;
+      } else {
+        authStore.authenticated = false;
+      }
+    } catch (error) {
+      console.error('Token verification failed:', error);
+      authStore.authenticated = false;
+    }
+  } else {
+    authStore.authenticated = false;
   }
 
-  // if token exists and url is /login redirect to homepage
-  if (token.value && to?.name === 'login') {
-    return navigateTo('/mission-report');
-  }
-
-  // if token doesn't exist redirect to log in
-  if (!token.value && to?.name !== 'login') {
-    abortNavigation();
+  if (!authStore.authenticated && to.name !== 'login') {
     return navigateTo('/login');
+  }
+
+  if (authStore.authenticated && to.name === 'login') {
+    return navigateTo('/mission-report');
   }
 });

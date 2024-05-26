@@ -1,3 +1,8 @@
+# Functionality
+The program has the functionality to log in based on user credentials. Middleware is setup globally to only allow users to see /mission-report when the user is logged in.
+A file for the mission reports are added as a placeholder, but can not yet be updated. This is to show the next step and to map out the placeholder mission reports for design reasion.
+
+
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.

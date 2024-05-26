@@ -28,6 +28,7 @@ export default {
       TxGray10: 'var(--TxGray10)',
       Ac: 'var(--Ac)',
       Tp: 'var(--Tp)',
+      Wa: 'var(--Wa)',
     },
     extend: {},
   },

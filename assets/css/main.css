@@ -11,6 +11,7 @@
   --TxGray10: #a9a9a94d;
   --Ac: #ffba00;
   --Tp: #ffbb0000;
+  --Wa: #de0b0b;
 }
 
 html {
@@ -47,32 +48,43 @@ h3 {
 }
 
 h4 {
+  font-family: 'Geist-Bold';
   font-size: 2rem;
   color: var(--Tx);
   font-weight: 500;
 }
 
 p {
+  font-family: 'Geist-Regular';
+  font-size: 1rem;
+  color: var(--Tx);
+  font-weight: 400;
+}
+input {
+  font-family: 'Geist-Regular';
   font-size: 1rem;
   color: var(--Tx);
   font-weight: 400;
 }
 a {
+  font-family: 'Geist-Thin';
   font-size: 1rem;
   color: var(--Tx);
   font-weight: 400;
 }
 
 label {
+  font-family: 'Geist-Thin';
   font-size: 1rem;
   color: var(--Tx);
   font-weight: 400;
 }
 
 button {
+  font-family: 'Geist-Bold';
   font-size: 1rem;
-  color: var(--Tx);
-  font-weight: 400;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 .p-alt {
@@ -82,9 +94,22 @@ button {
 }
 
 .border-invalid {
-  border: rgb(222, 11, 11) solid 2px;
+  border: var(--Wa) solid 2px;
 }
 
 .invalid-credentials {
-  color: rgb(222, 11, 11) solid 2px;
+  color: var(--Wa) solid 2px;
+}
+
+.shake {
+  animation: shake 0.125s 2 backwards;
+}
+
+@keyframes shake {
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
 }

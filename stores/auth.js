@@ -4,9 +4,10 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null,
     loginError: false, // Added loginError state
+    authenticated: false,
   }),
   actions: {
-    async login(email, password) {
+    async authenticateUser(email, password) {
       const users = await $fetch('/users.json');
       console.log('Users', users);
       console.log('email:', email, 'password:', password);
@@ -16,6 +17,10 @@ export const useAuthStore = defineStore('auth', {
       );
 
       if (user) {
+        const token = useCookie('token');
+        token.value = '123'; // set token to cookie
+        this.authenticated = true;
+
         console.log('true');
         this.user = user;
         this.loginError = false; // Reset loginError on successful login
@@ -27,6 +32,7 @@ export const useAuthStore = defineStore('auth', {
         console.log(user);
       }
     },
+
     logout() {
       this.user = null;
       // Handle logout logic (e.g., remove tokens, redirect to login)

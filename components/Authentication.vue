@@ -110,11 +110,14 @@ const authStore = useAuthStore();
 const isLoggedIn = computed(() => authStore.isLoggedIn);
 const hasLoginError = computed(() => authStore.hasLoginError);
 
+const { authenticateUser } = useAuthStore();
+const { authenticated } = storeToRefs(useAuthStore());
+
 const shakeKey = ref(0); // Define a key to force re-render
 
 async function login() {
   console.log('Login', email.value, password.value);
-  await authStore.login(email.value, password.value);
+  await authenticateUser(email.value, password.value);
 
   if (hasLoginError.value) {
     clearInputs(); // Clear inputs on error

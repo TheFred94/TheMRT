@@ -89,9 +89,6 @@ async function fetchMissionReports() {
     matchingMissions.value = data.filter(
       (mission) => mission.id === userData.value.id
     );
-
-    // Log the matching objects (optional)
-    console.log('matching missions', matchingMissions.value);
   } catch (error) {
     console.error(error);
   }
